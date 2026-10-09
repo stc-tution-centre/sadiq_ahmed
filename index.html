@@ -1,0 +1,1043 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Portfolio - Sadiq Ahmed</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700;800&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            width: 100%;
+            overflow-x: hidden;
+            background-color: #ffffff;
+            color: #000000;
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        /* Circular Loading Screen Styling */
+        #loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background-color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 99999;
+            transition: opacity 0.4s ease, visibility 0.4s ease;
+        }
+
+        .circle-spinner {
+            width: 48px;
+            height: 48px;
+            border: 5px solid #e5e7eb;
+            border-top: 5px solid #000000;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin-bottom: 14px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loader-subtext {
+            font-size: 13px;
+            font-weight: 700;
+            color: #6b7280;
+            text-align: center;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        /* Navbar */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 18px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(8px);
+        }
+
+        .logo {
+            font-size: 18px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        /* 3-Dots Menu Styling */
+        .menu-container {
+            position: relative;
+        }
+
+        .menu-dots-btn {
+            background: transparent;
+            border: none;
+            font-size: 24px;
+            font-weight: 800;
+            cursor: pointer;
+            color: #000000;
+            padding: 4px 10px;
+            letter-spacing: 2px;
+            outline: none;
+            transition: transform 0.2s ease;
+        }
+
+        .menu-dots-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 45px;
+            right: 0;
+            background-color: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            width: 180px;
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+            z-index: 1100;
+        }
+
+        .dropdown-menu.show {
+            display: flex;
+        }
+
+        .dropdown-menu a {
+            padding: 14px 20px;
+            color: #000000;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            border-bottom: 1px solid #f3f4f6;
+            transition: background-color 0.2s ease, color 0.2s ease;
+        }
+
+        .dropdown-menu a:last-child {
+            border-bottom: none;
+        }
+
+        .dropdown-menu a:hover {
+            background-color: #000000;
+            color: #ffffff;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            position: relative;
+            width: 100%;
+            background-color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 140px 20px 70px 20px;
+        }
+
+        .bg-text-container {
+            text-align: center;
+            width: 100%;
+            max-width: 1200px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .text-line-1 { 
+            font-family: 'Anton', Impact, sans-serif;
+            font-size: clamp(34px, 10vw, 120px); 
+            line-height: 1; 
+            margin: 0; 
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            white-space: nowrap;
+        }
+        
+        .text-line-2 { 
+            font-family: 'Anton', Impact, sans-serif;
+            font-size: clamp(22px, 6.5vw, 80px); 
+            line-height: 1; 
+            margin: 10px 0 0 0; 
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            white-space: nowrap;
+        }
+
+        /* About Section */
+        .about-section {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: #ffffff;
+            position: relative;
+            z-index: 30;
+            border-top: 1px solid #e5e7eb; 
+            padding: 60px 20px;
+        }
+
+        .about-container {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            max-width: 1100px;
+            width: 100%;
+            flex-wrap: nowrap;
+        }
+
+        .about-box {
+            border-left: 5px solid #ff0000;
+            padding-left: 16px;
+            flex: 1;
+            min-width: 0;
+        }
+
+        .about-name {
+            font-size: clamp(18px, 4.5vw, 26px);
+            font-weight: 700;
+            color: #000000;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+        }
+
+        .about-description {
+            font-size: clamp(13px, 3.2vw, 15px);
+            color: #d97706;
+            font-weight: 600;
+            line-height: 1.6;
+        }
+
+        .panda-image {
+            width: 110px;
+            height: auto;
+            object-fit: contain;
+            border-radius: 12px;
+            flex-shrink: 0;
+        }
+
+        /* Skills Section */
+        .skills-section {
+            width: 100%;
+            background-color: #ffffff;
+            color: #000000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 70px 20px;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .skills-title {
+            font-family: 'Anton', sans-serif;
+            font-size: clamp(28px, 6vw, 36px);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 40px;
+            text-align: center;
+            color: #000000;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+            max-width: 1000px;
+            width: 100%;
+        }
+
+        .skill-card {
+            background-color: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-radius: 20px;
+            padding: 26px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .skill-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.06);
+        }
+
+        .skill-icon-box {
+            width: 65px;
+            height: 65px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .skill-icon-box img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        .skill-name {
+            font-size: 18px;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+
+        .skill-desc {
+            font-size: 13.5px;
+            color: #4b5563;
+            line-height: 1.6;
+            font-weight: 500;
+        }
+
+        /* Projects Section */
+        .projects-section {
+            width: 100%;
+            background-color: #ffffff;
+            color: #000000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 70px 20px;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .projects-title {
+            font-family: 'Anton', sans-serif;
+            font-size: clamp(28px, 6vw, 36px);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 40px;
+            text-align: center;
+            color: #000000;
+        }
+
+        .projects-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            max-width: 1000px;
+            width: 100%;
+        }
+
+        .project-card {
+            background-color: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-radius: 20px;
+            padding: 22px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .project-flex {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            align-items: stretch;
+        }
+
+        .project-img-box {
+            width: 100%;
+            height: 210px;
+            flex-shrink: 0;
+            border-radius: 14px;
+            overflow: hidden;
+            border: 1px solid #e5e7eb;
+            background-color: #000000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 4px;
+        }
+
+        .project-img-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 10px;
+            display: block;
+        }
+
+        .project-details {
+            flex: 1;
+        }
+
+        .project-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.06);
+        }
+
+        .project-tag {
+            display: inline-block;
+            background-color: #ff0000;
+            color: #ffffff;
+            font-size: 10.5px;
+            font-weight: 700;
+            padding: 4px 12px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+
+        .project-name {
+            font-size: 20px;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+            letter-spacing: 1px;
+            font-family: monospace, sans-serif;
+        }
+
+        .project-desc {
+            font-size: 13.5px;
+            color: #4b5563;
+            line-height: 1.6;
+            font-weight: 500;
+            margin-bottom: 14px;
+        }
+
+        .project-tech {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .tech-badge {
+            background-color: #e5e7eb;
+            color: #000000;
+            font-size: 10.5px;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 6px;
+            text-transform: uppercase;
+        }
+
+        /* Stats Section */
+        .stats-section {
+            width: 100%;
+            background-color: #000000;
+            color: #ffffff;
+            padding: 45px 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+            max-width: 1100px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .stat-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .stat-number {
+            font-family: 'Anton', sans-serif;
+            font-size: 38px;
+            color: #ff0000;
+            letter-spacing: 1.5px;
+            line-height: 1;
+            margin-bottom: 6px;
+        }
+
+        .stat-label {
+            font-size: 11.5px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #d1d5db;
+        }
+
+        /* FAQ Section */
+        .faq-section {
+            width: 100%;
+            background-color: #f9fafb;
+            color: #000000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 70px 20px;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .faq-header {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .faq-title {
+            font-family: 'Inter', sans-serif;
+            font-size: 26px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            color: #111827;
+            margin-bottom: 6px;
+        }
+
+        .faq-subtitle {
+            font-size: 13.5px;
+            color: #6b7280;
+            font-weight: 500;
+        }
+
+        .faq-container {
+            max-width: 800px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .faq-item {
+            background-color: #ffffff;
+            border: 1px solid #f3f4f6;
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+        }
+
+        .faq-question-btn {
+            width: 100%;
+            padding: 16px 18px;
+            background: transparent;
+            border: none;
+            outline: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            text-align: left;
+            font-family: 'Inter', sans-serif;
+            font-size: 14.5px;
+            font-weight: 700;
+            color: #111827;
+        }
+
+        .faq-icon {
+            font-size: 18px;
+            font-weight: 600;
+            color: #111827;
+            transition: transform 0.3s ease;
+            margin-left: 10px;
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+            padding: 0 18px;
+            font-size: 13.5px;
+            color: #4b5563;
+            line-height: 1.6;
+            font-weight: 400;
+        }
+
+        .faq-item.active .faq-icon {
+            transform: rotate(45deg);
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 250px;
+            padding-bottom: 16px;
+        }
+
+        /* Footer */
+        footer {
+            width: 100%;
+            background-color: #ffffff;
+            border-top: 4px solid #000000;
+            padding: 45px 20px 25px 20px;
+            color: #111827;
+        }
+
+        .footer-top {
+            display: flex;
+            flex-direction: column;
+            max-width: 1100px;
+            margin: 0 auto;
+            gap: 30px;
+            padding-bottom: 30px;
+        }
+
+        .footer-col {
+            width: 100%;
+        }
+
+        .footer-heading {
+            font-size: 17px;
+            font-weight: 800;
+            color: #111827;
+            margin-bottom: 10px;
+        }
+
+        .footer-text {
+            font-size: 13.5px;
+            color: #4b5563;
+            line-height: 1.6;
+        }
+
+        .info-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .info-item {
+            font-size: 13.5px;
+            color: #4b5563;
+        }
+
+        .info-item strong {
+            color: #111827;
+            font-weight: 700;
+        }
+
+        .info-item a {
+            color: #000000;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .footer-middle {
+            border-top: 1px solid #f3f4f6;
+            padding-top: 25px;
+            text-align: center;
+        }
+
+        .community-text {
+            font-size: 14.5px;
+            font-weight: 600;
+            color: #111827;
+            margin-bottom: 14px;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 14px;
+            margin-bottom: 25px;
+        }
+
+        .social-btn {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background-color: #000000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #ffffff;
+            font-size: 17px;
+            text-decoration: none;
+        }
+
+        .copyright-text {
+            font-size: 11.5px;
+            color: #9ca3af;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        /* Tablet & Desktop Layouts (>= 768px) */
+        @media (min-width: 768px) {
+            nav { padding: 22px 40px; }
+            .hero-section { padding: 160px 40px 100px 40px; }
+            .about-section, .skills-section, .projects-section, .faq-section { padding: 90px 40px; }
+            .panda-image { width: 160px; }
+            
+            .skills-grid { 
+                grid-template-columns: repeat(2, 1fr); 
+                gap: 30px; 
+            }
+
+            .project-flex { 
+                flex-direction: row; 
+                gap: 28px; 
+                align-items: center; 
+            }
+            .project-img-box { 
+                width: 280px; 
+                height: 195px; 
+            }
+
+            .stats-grid { grid-template-columns: repeat(4, 1fr); }
+            .stat-number { font-size: 46px; }
+
+            .footer-top { flex-direction: row; justify-content: space-between; gap: 50px; }
+            .footer-col { flex: 1; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Circular Loading Screen -->
+    <div id="loading-screen">
+        <div class="circle-spinner"></div>
+        <div class="loader-subtext">Loading...</div>
+    </div>
+
+    <nav>
+        <div class="logo">SADIQ AHMED</div>
+        <div class="menu-container">
+            <button class="menu-dots-btn" id="menuBtn">&#8942;</button>
+            <div class="dropdown-menu" id="dropdownMenu">
+                <a href="#home">Home</a>
+                <a href="#about">About</a>
+                <a href="#projects">Our Projects</a>
+                <a href="#faq">FAQ</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero-section" id="home">
+        <div class="bg-text-container">
+            <h1 class="text-line-1">Generalist</h1>
+            <h2 class="text-line-2">Software Developer</h2>
+        </div>
+    </section>
+
+    <section class="about-section" id="about">
+        <div class="about-container">
+            <div class="about-box">
+                <div class="about-name">Hey, I'm Sadiq Ahmed</div>
+                <div class="about-description">
+                    I am the Head of Developers at Winds Development and a highly educated professional with kind behavior. I am the creator of the RAZE™ - BOT and The live game 'LIVE INDIA', where I've also worked for hosts. I specialize in building clean, modern web experiences and am readily open to low-budget projects and custom collaborations. Let's create something epic together!
+                </div>
+            </div>
+            <img src="https://i.postimg.cc/dQS4RnXP/Chat-GPT-Image-Jul-21-2026-04-22-47-PM.png" alt="Panda Character" class="panda-image" referrerpolicy="no-referrer">
+        </div>
+    </section>
+
+    <section class="skills-section">
+        <h2 class="skills-title">SPECIALIST IN CLD</h2>
+        <div class="skills-grid">
+            
+            <div class="skill-card">
+                <div class="skill-icon-box">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/9/99/Unofficial_JavaScript_logo_2.svg" alt="JavaScript">
+                </div>
+                <div class="skill-name">JAVASCRIPT</div>
+                <div class="skill-desc">
+                    Expert in building interactive web applications, dynamic UIs, and robust client-side logic for modern digital experiences.
+                </div>
+            </div>
+
+            <div class="skill-card">
+                <div class="skill-icon-box">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Python-logo-notext.svg" alt="Python">
+                </div>
+                <div class="skill-name">PYTHON</div>
+                <div class="skill-desc">
+                    Specialized in backend architecture, script automation, and advanced bot development like the RAZE™ - BOT for LIVE INDIA.
+                </div>
+            </div>
+
+            <div class="skill-card">
+                <div class="skill-icon-box">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/6/61/HTML5_logo_and_wordmark.svg" alt="HTML5">
+                </div>
+                <div class="skill-name">HTML5</div>
+                <div class="skill-desc">
+                    Structuring modern web pages with semantic markup, clean layouts, and standards-compliant document structures.
+                </div>
+            </div>
+
+            <div class="skill-card">
+                <div class="skill-icon-box">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/d/d5/CSS3_logo_and_wordmark.svg" alt="CSS3">
+                </div>
+                <div class="skill-name">CSS3</div>
+                <div class="skill-desc">
+                    Styling responsive web apps with advanced layouts, smooth animations, modern brutalist designs, and clean aesthetics.
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="projects-section" id="projects">
+        <h2 class="projects-title">OUR PROJECTS</h2>
+        <div class="projects-grid">
+            
+            <div class="project-card">
+                <div class="project-flex">
+                    <div class="project-img-box">
+                        <img src="https://i.postimg.cc/yY9KpxWj/Screenshot-20261009-181210-Gallery.jpg" alt="RAZE™ - BOT Preview" referrerpolicy="no-referrer">
+                    </div>
+                    <div class="project-details">
+                        <span class="project-tag">Top Ranked Bot</span>
+                        <div class="project-name">RAZE™ - BOT</div>
+                        <div class="project-desc">
+                            RAZE™ - BOT is one of our flagship creations built completely by us! It is recognized among the top Discord bots in the gaming community, gaining immense fame across discord users. Equipped with high-speed automation, custom gaming utilities, and seamless real-time response capabilities.
+                        </div>
+                        <div class="project-tech">
+                            <span class="tech-badge">Python</span>
+                            <span class="tech-badge">Top Discord Bot</span>
+                            <span class="tech-badge">LIVE INDIA Gaming</span>
+                            <span class="tech-badge">Community Famous</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-flex">
+                    <div class="project-img-box">
+                        <img src="https://i.postimg.cc/90hxL4fy/Screenshot-20260721-222733-Gallery.jpg" alt="Live India Game Preview" referrerpolicy="no-referrer">
+                    </div>
+                    <div class="project-details">
+                        <span class="project-tag">Open World Game</span>
+                        <div class="project-name">LIVE INDIA</div>
+                        <div class="project-desc">
+                            LIVE INDIA is an immersive, action-packed open-world gaming project engineered for massive multiplayer interaction and live community engagement. Designed with custom host management tools, interactive world mechanics, and seamless player management systems.
+                        </div>
+                        <div class="project-tech">
+                            <span class="tech-badge">Open World Game</span>
+                            <span class="tech-badge">Host Systems</span>
+                            <span class="tech-badge">Python & JS</span>
+                            <span class="tech-badge">Multiplayer Gaming</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-flex">
+                    <div class="project-img-box">
+                        <img src="https://i.postimg.cc/L6fPHyNB/Screenshot-20260721-223453-Chrome.jpg" alt="Web Suite Preview" referrerpolicy="no-referrer">
+                    </div>
+                    <div class="project-details">
+                        <span class="project-tag">Custom Web Solutions</span>
+                        <div class="project-name">WEB SUITE</div>
+                        <div class="project-desc">
+                            We build all types of custom web platforms, including high-level 3D websites, interactive web applications, and modern portfolio suites. Every project comes with lifetime domain support, ultra-fast hosting setup, and clean brutalist UI/UX architecture.
+                        </div>
+                        <div class="project-tech">
+                            <span class="tech-badge">3D Websites</span>
+                            <span class="tech-badge">Lifetime Domain</span>
+                            <span class="tech-badge">Full-Stack Dev</span>
+                            <span class="tech-badge">Custom Web Apps</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-flex">
+                    <div class="project-img-box">
+                        <img src="https://i.postimg.cc/kXnC4Gy5/Screenshot-20260721-223828-Gallery.jpg" alt="Host 24/7 Preview" referrerpolicy="no-referrer">
+                    </div>
+                    <div class="project-details">
+                        <span class="project-tag">24/7 Server Hosting</span>
+                        <div class="project-name">HOST 24/7</div>
+                        <div class="project-desc">
+                            Reliable 24/7 continuous hosting solutions with zero downtime. Get high-speed lifetime server hosting, ultra-fast uptime performance, and robust cloud deployment for bots and web apps at an extremely low, budget-friendly price!
+                        </div>
+                        <div class="project-tech">
+                            <span class="tech-badge">Zero Downtime</span>
+                            <span class="tech-badge">Lifetime Hosting</span>
+                            <span class="tech-badge">Low Price</span>
+                            <span class="tech-badge">24/7 Uptime</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="stats-section">
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number">50+</div>
+                <div class="stat-label">Bots Developed</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">99.9%</div>
+                <div class="stat-label">Server Uptime</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">100+</div>
+                <div class="stat-label">Happy Clients</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">24/7</div>
+                <div class="stat-label">Active Support</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="faq-section" id="faq">
+        <div class="faq-header">
+            <h2 class="faq-title">Frequently Asked Questions</h2>
+            <p class="faq-subtitle">Common system queries reviewed frequently by onboarding clients.</p>
+        </div>
+
+        <div class="faq-container">
+            <div class="faq-item">
+                <button class="faq-question-btn">
+                    How does the 24/7 hosting suite secure custom instances?
+                    <span class="faq-icon">+</span>
+                </button>
+                <div class="faq-answer">
+                    Every bot script and platform operates within isolated containerized node environments protected by continuous process monitoring guards.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question-btn">
+                    What protocols drive high scalability app environments?
+                    <span class="faq-icon">+</span>
+                </button>
+                <div class="faq-answer">
+                    We use dynamic load balancers, optimized Python/Node backend architectures, and CDN caching layers to maintain zero-latency response times during peak traffic.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question-btn">
+                    How do we apply or request a custom automation module?
+                    <span class="faq-icon">+</span>
+                </button>
+                <div class="faq-answer">
+                    You can contact Sadiq Ahmed or the development team directly with your specifications. We offer open collaborations for low-budget and custom projects.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question-btn">
+                    What is the average runtime deployment window for new builds?
+                    <span class="faq-icon">+</span>
+                </button>
+                <div class="faq-answer">
+                    Standard Discord bots and web portals are deployed live within 10 to 30 minutes after configuration verification.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-top">
+            <div class="footer-col">
+                <h3 class="footer-heading">SADIQ AHMED</h3>
+                <p class="footer-text">
+                    Specialized in custom application systems, interactive games, modern websites, and non-stop 24/7 cloud hosting clusters built completely by Sadiq Ahmed.
+                </p>
+            </div>
+            
+            <div class="footer-col">
+                <h3 class="footer-heading">Operational Info</h3>
+                <div class="info-list">
+                    <div class="info-item"><strong>Developer :</strong> Sadiq Ahmed</div>
+                    <div class="info-item"><strong>Email Us :</strong> <a href="https://mail.google.com/mail/?view=cm&to=developmentwinds@gmail.com" target="_blank">developmentwinds@gmail.com</a></div>
+                    <div class="info-item"><strong>Development Desk :</strong> 24/7/365 Non-stop Active</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-middle">
+            <div class="community-text">Connect With Community Channels</div>
+            <div class="social-links">
+                <a href="https://www.instagram.com/sadiq_siddiqui123?igsh=b3huMDZ0emsxYXo1" target="_blank" class="social-btn" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                <a href="https://discord.gg/WYyJKGAKkM" target="_blank" class="social-btn" title="Discord"><i class="fa-brands fa-discord"></i></a>
+                <a href="https://mail.google.com/mail/?view=cm&to=developmentwinds@gmail.com" target="_blank" class="social-btn" title="Gmail"><i class="fa-solid fa-envelope"></i></a>
+            </div>
+            <div class="copyright-text">
+                &copy; ALL RIGHTS RESERVED BY SADIQ AHMED
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Reliable loader hide function with fallback
+        function hideLoader() {
+            const loadingScreen = document.getElementById('loading-screen');
+            if (loadingScreen && loadingScreen.style.visibility !== 'hidden') {
+                loadingScreen.style.opacity = '0';
+                loadingScreen.style.visibility = 'hidden';
+            }
+        }
+        window.addEventListener('load', hideLoader);
+        setTimeout(hideLoader, 1000); // Max 1s wait fallback
+
+        // FAQ Toggle Logic
+        const faqItems = document.querySelectorAll('.faq-item');
+        faqItems.forEach(item => {
+            const btn = item.querySelector('.faq-question-btn');
+            btn.addEventListener('click', () => {
+                const isActive = item.classList.contains('active');
+                faqItems.forEach(otherItem => {
+                    otherItem.classList.remove('active');
+                });
+                if (!isActive) {
+                    item.classList.add('active');
+                }
+            });
+        });
+
+        // Dropdown Menu Logic
+        const menuBtn = document.getElementById('menuBtn');
+        const dropdownMenu = document.getElementById('dropdownMenu');
+
+        menuBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            dropdownMenu.classList.toggle('show');
+        });
+
+        const dropdownLinks = dropdownMenu.querySelectorAll('a');
+        dropdownLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                dropdownMenu.classList.remove('show');
+            });
+        });
+
+        window.addEventListener('click', () => {
+            if (dropdownMenu.classList.contains('show')) {
+                dropdownMenu.classList.remove('show');
+            }
+        });
+    </script>
+</body>
+</html>
